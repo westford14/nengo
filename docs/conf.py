@@ -43,6 +43,10 @@ else:
 if os.path.exists('examples'):
     shutil.rmtree('examples')
 shutil.copytree('../examples', 'examples')
+for dirpath, dirnames, _ in os.walk('examples'):
+    for d in dirnames:
+        with open(os.path.join(dirpath, d, 'nengorc'), 'w') as f:
+            f.write('[progress]\nprogress_bar = False\n')
 
 
 extensions = [
