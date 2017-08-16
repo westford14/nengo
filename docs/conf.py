@@ -19,6 +19,27 @@ except ImportError:
     sys.exit(1)
 
 
+if 'NENGO_NBSPHINX_KERNEL' in os.environ:
+    nbsphinx_kernel_name = os.environ['NENGO_NBSPHINX_KERNEL']
+else:
+    from jupyter_client.kernelspecapp import KernelSpecManager
+    kernels = sorted(KernelSpecManager().find_kernel_specs())
+    print("Available Jupyter kernels:")
+    for i, kernel in enumerate(kernels):
+        print(" {}. {}".format(i + 1, kernel))
+    nbsphinx_kernel_name = None
+    while nbsphinx_kernel_name not in kernels:
+        nbsphinx_kernel_name = input(
+            "Select kernel for executing Jupyter notebooks: ")
+        try:
+            nbsphinx_kernel_name = kernels[int(nbsphinx_kernel_name) - 1]
+        except (IndexError, ValueError):
+            pass
+    print("To make this choice permanent add the following to your shell "
+          "startup file (e.g., .bashrc):")
+    print("export NENGO_NBSPHINX_KERNEL={!r}".format(nbsphinx_kernel_name))
+
+
 if os.path.exists('examples'):
     shutil.rmtree('examples')
 shutil.copytree('../examples', 'examples')
