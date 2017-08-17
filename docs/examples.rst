@@ -137,3 +137,12 @@ Extending Nengo
    :maxdepth: 1
 
    examples/usage/rectified_linear
+
+References
+==========
+
+.. toctree::
+   :maxdepth: 1
+
+   examples/usage/exceptions
+   examples/usage/strings

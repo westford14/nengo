@@ -82,7 +82,7 @@ todo_include_todos = True
 numpydoc_show_class_members = False
 
 # -- sphinx
-exclude_patterns = ['_build', '**/.ipynb_checkpoints']
+exclude_patterns = ['_build', '**/.ipynb_checkpoints', 'examples/README.rst']
 source_suffix = ['.rst', '.ipynb']
 source_parsers = {'.ipynb': nbsphinx.NotebookParser}
 source_encoding = 'utf-8'
