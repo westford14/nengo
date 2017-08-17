@@ -47,6 +47,7 @@ for dirpath, dirnames, _ in os.walk('examples'):
     for d in dirnames:
         with open(os.path.join(dirpath, d, 'nengorc'), 'w') as f:
             f.write('[progress]\nprogress_bar = False\n')
+            f.write('[decoder_cache]\nenabled = False\n')
 
 
 extensions = [
