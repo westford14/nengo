@@ -50,6 +50,7 @@ for dirpath, dirnames, _ in os.walk('examples'):
             f.write('[decoder_cache]\nenabled = False\n')
 
 
+needs_sphinx = '1.3'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
@@ -90,9 +91,6 @@ master_doc = 'index'
 # -- nbsphinx
 nbsphinx_timeout = 600
 
-# Need to include https Mathjax path for sphinx < v1.3
-mathjax_path = ("https://cdn.mathjax.org/mathjax/latest/MathJax.js"
-                "?config=TeX-AMS-MML_HTMLorMML")
 
 project = u'Nengo'
 authors = u'Applied Brain Research'
