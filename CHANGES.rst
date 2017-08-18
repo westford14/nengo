@@ -22,6 +22,12 @@ Release History
 2.6.1 (unreleased)
 ==================
 
+**Changed**
+
+- Updates to the documentation process to support recent Jupyter versions.
+  (`#1308 <https://github.com/nengo/nengo/issues/1308>`_,
+  `#1349 <https://github.com/nengo/nengo/pull/1349>`_)
+
 **Fixed**
 
 - Better error message for invalid return values in ``nengo.Node`` functions.
