@@ -61,7 +61,6 @@ extensions = [
     'guzzle_sphinx_theme',
     'nbsphinx',
     'numpydoc',
-    'nengo.utils.docutils',
 ]
 
 # -- sphinx.ext.autodoc

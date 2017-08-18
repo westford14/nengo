@@ -28,6 +28,12 @@ Release History
   (`#1308 <https://github.com/nengo/nengo/issues/1308>`_,
   `#1349 <https://github.com/nengo/nengo/pull/1349>`_)
 
+**Removed**
+
+- Removed ``nengo.utils.docutils`` as these are no longer required for the
+  Nengo documentation.
+  (`#1349 <https://github.com/nengo/nengo/pull/1349>`_)
+
 **Fixed**
 
 - Better error message for invalid return values in ``nengo.Node`` functions.
