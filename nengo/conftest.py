@@ -320,7 +320,7 @@ def pytest_runtest_setup(item):  # noqa: C901
                 pytest.xfail(reason)
 
 
-def pytest_terminal_summary(terminalreporter):
+def determine_run_stats(terminalreporter):
     non_runnables = {
         "compare tests not requested",
         "frontend tests not run for alternate backends",
@@ -342,6 +342,11 @@ def pytest_terminal_summary(terminalreporter):
                 n = len(terminalreporter.stats[key])
                 n_ran += n
                 n_runnables += n
+    return n_ran, n_runnables
+
+
+def pytest_terminal_summary(terminalreporter):
+    n_ran, n_runnables = determine_run_stats(terminalreporter)
     if n_ran == n_runnables:
         line = "Ran all {} runnable tests.".format(n_ran)
     else:
