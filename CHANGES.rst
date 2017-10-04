@@ -22,6 +22,12 @@ Release History
 2.5.1 (unreleased)
 ==================
 
+**Added**
+
+- Added information about number of runnable tests to pytest summary 
+  (`#1082 <https://github.com/nengo/nengo/issues/1082>`_,
+  `#1350 <https://github.com/nengo/nengo/pull/1350>`_)
+
 **Fixed**
 
 - The progress bar that can appear when building a large model
