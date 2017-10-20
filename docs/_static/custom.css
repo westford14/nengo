@@ -14,3 +14,7 @@ code, .rst-content tt, .rst-content code {
     padding-left: 0;
     width: inherit;
 }
+
+#right-column .header div {
+    float: left;
+}

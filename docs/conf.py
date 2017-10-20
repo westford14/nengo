@@ -50,6 +50,18 @@ for dirpath, dirnames, _ in os.walk('examples'):
             f.write('[decoder_cache]\nenabled = False\n')
 
 
+def copy_examples(app, exception):
+    if exception is None:
+        download_path = os.path.join(app.outdir, '_downloads')
+        if not os.path.exists(download_path):
+            os.mkdir(download_path)
+        shutil.copytree('examples', os.path.join(download_path, 'examples'))
+
+
+def setup(app):
+    app.connect('build-finished', copy_examples)
+
+
 needs_sphinx = '1.3'
 extensions = [
     'sphinx.ext.autodoc',
@@ -117,6 +129,7 @@ html_title = "Nengo core {0} docs".format(release)
 htmlhelp_basename = 'Nengo core'
 html_last_updated_fmt = ''  # Suppress 'Last updated on:' timestamp
 html_show_sphinx = False
+templates_path = ['_templates']
 
 # -- Options for LaTeX output -------------------------------------------------
 
