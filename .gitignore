@@ -21,4 +21,3 @@ Vagrantfile
 *.eggs/
 .coverage
 htmlcov
-docs/examples

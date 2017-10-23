@@ -40,22 +40,14 @@ else:
     print("export NENGO_NBSPHINX_KERNEL={!r}".format(nbsphinx_kernel_name))
 
 
-if os.path.exists('examples'):
-    shutil.rmtree('examples')
-shutil.copytree('../examples', 'examples')
-for dirpath, dirnames, _ in os.walk('examples'):
-    for d in dirnames:
-        with open(os.path.join(dirpath, d, 'nengorc'), 'w') as f:
-            f.write('[progress]\nprogress_bar = False\n')
-            f.write('[decoder_cache]\nenabled = False\n')
-
-
 def copy_examples(app, exception):
     if exception is None:
         download_path = os.path.join(app.outdir, '_downloads')
         if not os.path.exists(download_path):
             os.mkdir(download_path)
-        shutil.copytree('examples', os.path.join(download_path, 'examples'))
+        shutil.copytree(
+            os.path.join(app.srcdir, 'examples'),
+            os.path.join(download_path, 'examples'))
 
 
 def setup(app):
