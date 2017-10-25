@@ -34,6 +34,15 @@ Release History
   ``Ensemble.n_neurons`` or ``Ensemble.dimensions``.
   (`#1372 <https://github.com/nengo/nengo/pull/1372>`__)
 
+**Deprecated**
+
+- The ``nengo.ipynb`` IPython extension and the ``IPython2ProgressBar``
+  have been deprecated. ``IPython5ProgressBar`` can be used instead (supporting
+  IPython>=5) and will be automatically activated in IPython kernels (e.g.,
+  in Jupyter notebooks).
+  (`#1375 <https://github.com/nengo/nengo/pull/1375>`_,
+  `#1087 <https://github.com/nengo/nengo/issues/1087>`_)
+
 **Fixed**
 
 - Better error message for invalid return values in ``nengo.Node`` functions.
