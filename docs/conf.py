@@ -43,11 +43,12 @@ else:
 def copy_examples(app, exception):
     if exception is None:
         download_path = os.path.join(app.outdir, '_downloads')
+        dest_path = os.path.join(download_path, 'examples')
         if not os.path.exists(download_path):
             os.mkdir(download_path)
-        shutil.copytree(
-            os.path.join(app.srcdir, 'examples'),
-            os.path.join(download_path, 'examples'))
+        if os.path.exists(dest_path):
+            shutil.rmtree(dest_path)
+        shutil.copytree(os.path.join(app.srcdir, 'examples'), dest_path)
 
 
 def setup(app):
