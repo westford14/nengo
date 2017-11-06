@@ -42,10 +42,10 @@ class Solver(with_metaclass(DocstringInheritor, FrozenObject)):
         Y : (n_eval_points, dimensions) array_like
             Matrix of the target decoded values for each of the D dimensions,
             at each of the evaluation points.
-        rng : `numpy.random.RandomState`, optional (Default: None)
+        rng : `numpy.random.RandomState`, optional
             A random number generator to use as required. If None,
             the ``numpy.random`` module functions will be used.
-        E : (dimensions, post.n_neurons) array_like, optional (Default: None)
+        E : (dimensions, post.n_neurons) array_like, optional
             Array of post-population encoders. Providing this tells the solver
             to return an array of connection weights rather than decoders.
 
@@ -71,7 +71,7 @@ class Solver(with_metaclass(DocstringInheritor, FrozenObject)):
             The signal of interest.
         E : (dimensions, n_neurons) array_like or None
             Array of encoders. If None, ``Y`` will be returned unchanged.
-        copy : bool, optional (Default: False)
+        copy : bool, optional
             Whether a copy of ``Y`` should be returned if ``E`` is None.
         """
         if self.weights and E is None:
@@ -95,9 +95,9 @@ class Lstsq(Solver):
 
     Parameters
     ----------
-    weights : bool, optional (Default: False)
+    weights : bool, optional
         If False, solve for decoders. If True, solve for weights.
-    rcond : float, optional (Default: 0.01)
+    rcond : float, optional
         Cut-off ratio for small singular values (see `numpy.linalg.lstsq`).
 
     Attributes
@@ -136,11 +136,11 @@ class _LstsqNoiseSolver(Solver):
         """
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
-        noise : float, optional (Default: 0.1)
+        noise : float, optional
             Amount of noise, as a fraction of the neuron activity.
-        solver : `.LeastSquaresSolver`, optional (Default: ``Cholesky()``)
+        solver : `.LeastSquaresSolver`, optional
             Subsolver to use for solving the least squares problem.
 
         Attributes
@@ -192,11 +192,11 @@ class _LstsqL2Solver(Solver):
         """
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
-        reg : float, optional (Default: 0.1)
+        reg : float, optional
             Amount of regularization, as a fraction of the neuron activity.
-        solver : `.LeastSquaresSolver`, optional (Default: ``Cholesky()``)
+        solver : `.LeastSquaresSolver`, optional
             Subsolver to use for solving the least squares problem.
 
         Attributes
@@ -258,11 +258,11 @@ class LstsqL1(Solver):
 
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
-        l1 : float, optional (Default: 1e-4)
+        l1 : float, optional
             Amount of L1 regularization.
-        l2 : float, optional (Default: 1e-6)
+        l2 : float, optional
             Amount of L2 regularization.
 
         Attributes
@@ -322,13 +322,13 @@ class LstsqDrop(Solver):
         """
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
-        drop : float, optional (Default: 0.25)
+        drop : float, optional
             Fraction of decoders or weights to set to zero.
-        solver1 : Solver, optional (Default: ``LstsqL2(reg=0.001)``)
+        solver1 : Solver, optional
             Solver for finding the initial decoders.
-        solver2 : Solver, optional (Default: ``LstsqL2(reg=0.1)``)
+        solver2 : Solver, optional
             Used for re-solving for the decoders after dropout.
 
         Attributes
@@ -391,7 +391,7 @@ class Nnls(Solver):
 
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
 
         Attributes
@@ -440,9 +440,9 @@ class NnlsL2(Nnls):
 
         Parameters
         ----------
-        weights : bool, optional (Default: False)
+        weights : bool, optional
             If False, solve for decoders. If True, solve for weights.
-        reg : float, optional (Default: 0.1)
+        reg : float, optional
             Amount of regularization, as a fraction of the neuron activity.
 
         Attributes
@@ -503,27 +503,27 @@ class NoSolver(Solver):
 
     Parameters
     ----------
-    values : (n_neurons, n_weights) array_like, optional (Default: None)
+    values : (n_neurons, n_weights) array_like, optional
         The array of decoders or weights to use.
         If ``weights`` is ``False``, ``n_weights`` is the expected
         output dimensionality. If ``weights`` is ``True``,
         ``n_weights`` is the number of neurons in the post ensemble.
         If ``None``, which is the default, the solver will return an
         appropriately sized array of zeros.
-    weights : bool, optional (Default: False)
+    weights : bool, optional
         If False, ``values`` is interpreted as decoders.
         If True, ``values`` is interpreted as weights.
 
     Attributes
     ----------
-    values : (n_neurons, n_weights) array_like, optional (Default: None)
+    values : (n_neurons, n_weights) array_like, optional
         The array of decoders or weights to use.
         If ``weights`` is ``False``, ``n_weights`` is the expected
         output dimensionality. If ``weights`` is ``True``,
         ``n_weights`` is the number of neurons in the post ensemble.
         If ``None``, which is the default, the solver will return an
         appropriately sized array of zeros.
-    weights : bool, optional (Default: False)
+    weights : bool, optional
         If False, ``values`` is interpreted as decoders.
         If True, ``values`` is interpreted as weights.
     """

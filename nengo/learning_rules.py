@@ -52,9 +52,9 @@ class LearningRuleType(FrozenObject):
 
     Parameters
     ----------
-    learning_rate : float, optional (Default: 1e-6)
+    learning_rate : float, optional
         A scalar indicating the rate at which ``modifies`` will be adjusted.
-    size_in : int, str, optional (Default: 0)
+    size_in : int, str, optional
         Dimensionality of the error signal (see above).
 
     Attributes
@@ -95,9 +95,9 @@ class PES(LearningRuleType):
 
     Parameters
     ----------
-    learning_rate : float, optional (Default: 1e-4)
+    learning_rate : float, optional
         A scalar indicating the rate at which weights will be adjusted.
-    pre_tau : float, optional (Default: 0.005)
+    pre_tau : float, optional
         Filter constant on activities of neurons in pre population.
 
     Attributes
@@ -149,14 +149,14 @@ class BCM(LearningRuleType):
 
     Parameters
     ----------
-    theta_tau : float, optional (Default: 1.0)
+    theta_tau : float, optional
         A scalar indicating the time constant for theta integration.
-    pre_tau : float, optional (Default: 0.005)
+    pre_tau : float, optional
         Filter constant on activities of neurons in pre population.
-    post_tau : float, optional (Default: None)
+    post_tau : float, optional
         Filter constant on activities of neurons in post population.
         If None, post_tau will be the same as pre_tau.
-    learning_rate : float, optional (Default: 1e-9)
+    learning_rate : float, optional
         A scalar indicating the rate at which weights will be adjusted.
 
     Attributes
@@ -219,14 +219,14 @@ class Oja(LearningRuleType):
 
     Parameters
     ----------
-    pre_tau : float, optional (Default: 0.005)
+    pre_tau : float, optional
         Filter constant on activities of neurons in pre population.
-    post_tau : float, optional (Default: None)
+    post_tau : float, optional
         Filter constant on activities of neurons in post population.
         If None, post_tau will be the same as pre_tau.
-    beta : float, optional (Default: 1.0)
+    beta : float, optional
         A scalar weight on the forgetting term.
-    learning_rate : float, optional (Default: 1e-6)
+    learning_rate : float, optional
         A scalar indicating the rate at which weights will be adjusted.
 
     Attributes
@@ -280,9 +280,9 @@ class Voja(LearningRuleType):
 
     Parameters
     ----------
-    post_tau : float, optional (Default: 0.005)
+    post_tau : float, optional
         Filter constant on activities of neurons in post population.
-    learning_rate : float, optional (Default: 1e-2)
+    learning_rate : float, optional
         A scalar indicating the rate at which encoders will be adjusted.
 
     Attributes

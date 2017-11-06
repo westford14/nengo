@@ -40,8 +40,7 @@ def build_network(model, network, progress_bar=False):
         The model to build into.
     network : Network
         The network to build.
-    progress_bar : bool or `.ProgressBar` or `.ProgressUpdater`, optional \
-                   (Default: False)
+    progress_bar : bool or `.ProgressBar` or `.ProgressUpdater`, optional
         Progress bar for displaying build progress.
 
         If True, the default progress bar will be used.
