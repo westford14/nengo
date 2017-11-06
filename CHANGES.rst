@@ -22,6 +22,12 @@ Release History
 2.6.1 (unreleased)
 ==================
 
+**Added**
+
+- Sphinx extension ``nengo.sphinx_paramdefault`` to automatically document
+  parameter defaults.
+  (`#1377 <https://github.com/nengo/nengo/pull/1377>`_)
+
 **Changed**
 
 - Updates to the documentation process to support recent Jupyter versions.
