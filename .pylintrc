@@ -1,6 +1,6 @@
 [MASTER]
 
-ignore = _vendor
+ignore = _vendor, compat.py
 
 
 [MESSAGES CONTROL]

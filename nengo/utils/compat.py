@@ -99,11 +99,6 @@ else:
         assert isinstance(s, bytes)
         return s
 
-assert pickle
-assert configparser
-assert replace
-assert zip_longest
-
 
 def is_integer(obj):
     return isinstance(obj, int_types + (np.integer,))
