@@ -654,6 +654,7 @@ def test_list_indexing(Simulator, plt, seed):
     assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.1)
 
 
+@pytest.mark.filterwarnings('ignore:boolean index did not match')
 def test_boolean_indexing(Simulator, rng, plt):
     D = 10
     mu = np.arange(D) % 2 == 0

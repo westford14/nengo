@@ -12,9 +12,17 @@ import time
 import warnings
 
 import numpy as np
+import pytest
 
-from .compat import is_string, reraise
+from .compat import is_string, PY2, reraise
 from .logging import CaptureLogHandler, console_formatter
+
+
+if PY2:
+    filter_resourcewarning = lambda fn: fn
+else:
+    filter_resourcewarning = pytest.mark.filterwarnings(
+        'ignore::ResourceWarning')
 
 
 class Mock(object):
