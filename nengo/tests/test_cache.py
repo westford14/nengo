@@ -383,7 +383,10 @@ with model:
 
     without_cache = {
         'rc': 'rc.set("decoder_cache", "enabled", "False")',
-        'stmt': 'sim = nengo.Simulator(model)'
+        'stmt': '''
+with nengo.Simulator(model):
+    pass
+'''
     }
 
     with_cache_miss_ro = {
