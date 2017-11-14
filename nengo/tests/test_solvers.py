@@ -309,6 +309,7 @@ def test_compare_solvers(Simulator, plt, seed):
 
 @pytest.mark.slow
 @pytest.mark.noassertions
+@pytest.mark.filterwarnings('ignore:overflow encountered in exp')
 def test_regularization(Simulator, nl_nodirect, plt):
 
     # TODO: multiple trials per parameter set, with different seeds
@@ -437,6 +438,7 @@ def test_eval_points_static(plt, rng):
 
 @pytest.mark.slow
 @pytest.mark.noassertions
+@pytest.mark.filterwarnings('ignore:overflow encountered in exp')
 def test_eval_points(Simulator, nl_nodirect, plt, seed, rng, logger):
     n = 100
     d = 5
