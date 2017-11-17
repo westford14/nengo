@@ -623,7 +623,7 @@ class ProgressTracker(object):
         self._closing = False
         self.sub_progress = None
 
-    def subtask(self, max_steps=None, ongoing_name='', finished_name=None):
+    def next_subtask(self, max_steps=None, ongoing_name='', finished_name=None):
         if self.sub_progress is not None:
             self.total_progress.step()
         self.sub_progress = Progress(max_steps, ongoing_name, finished_name)

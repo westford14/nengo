@@ -155,14 +155,14 @@ class Simulator(object):
                 progress_bar, Progress(None, "Building", "Build")) as pt:
             if network is not None:
                 # Build the network into the model
-                self.model.build(network, progress=pt.subtask(
+                self.model.build(network, progress=pt.next_subtask(
                     None, "Building", "Build"))
 
             # Order the steps (they are made in `Simulator.reset`)
             self.dg = operator_dependency_graph(self.model.operators)
 
             if optimize:
-                with pt.subtask(
+                with pt.next_subtask(
                         None, 'Building (running optimizer)', 'Optimization'):
                     opmerge_optimize(self.model, self.dg)
 
