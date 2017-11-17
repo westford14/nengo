@@ -27,6 +27,10 @@ Release History
 - Added ``amplitude`` parameter to ``LIF`` and ``LIFRate``,
   which scale the output amplitude.
   (`#1325 <https://github.com/nengo/nengo/pull/1325>`_)
+- The error input into learning rules can now be sliced.
+  (`#1365 <https://github.com/nengo/nengo/issues/1365>`_,
+  `#1385 <https://github.com/nengo/nengo/pull/1385>`_)
+
 
 **Changed**
 

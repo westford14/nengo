@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.testing import assert_allclose
 import pytest
 
 import nengo
@@ -549,3 +550,29 @@ def test_custom_type(Simulator):
     assert np.allclose(sim.data[p][:, 0, :3],
                        np.outer(np.arange(1, 6), np.arange(1, 4)))
     assert np.allclose(sim.data[p][:, :, 3:], 0)
+
+
+def test_slicing(Simulator):
+    with nengo.Network() as model:
+        a = nengo.Ensemble(10, 1)
+        b = nengo.Ensemble(10, 2)
+        conn = nengo.Connection(
+            a, b, learning_rule_type=PES(), function=lambda x: (0, 0))
+        nengo.Connection(nengo.Node(1.), a)
+
+        err1 = nengo.Node(lambda t, x: x - 0.75, size_in=1)
+        nengo.Connection(b[0], err1)
+        nengo.Connection(err1, conn.learning_rule[0])
+
+        err2 = nengo.Node(lambda t, x: x + 0.5, size_in=1)
+        nengo.Connection(b[1], err2)
+        nengo.Connection(err2, conn.learning_rule[1])
+
+        p = nengo.Probe(b, synapse=0.03)
+
+    with nengo.Simulator(model) as sim:
+        sim.run(1.)
+
+    t = sim.trange() > 0.8
+    assert_allclose(sim.data[p][t, 0], 0.75, atol=0.15)
+    assert_allclose(sim.data[p][t, 1], -0.5, atol=0.15)
