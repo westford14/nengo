@@ -27,6 +27,11 @@ Release History
 - Added ``amplitude`` parameter to ``LIF`` and ``LIFRate``,
   which scale the output amplitude.
   (`#1325 <https://github.com/nengo/nengo/pull/1325>`_)
+- Added ``sample_every`` argument to ``Simulator.trange`` to create tranges
+  for probes that have with a ``sample_every`` parameter that is not a multiple
+  of the simulator timestep.
+  (`#1368 <https://github.com/nengo/nengo/issues/1368>`_,
+  `#1384 <https://github.com/nengo/nengo/pull/1384>`_)
 
 **Changed**
 

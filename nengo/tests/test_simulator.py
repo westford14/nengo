@@ -2,6 +2,8 @@ import numpy as np
 import pkg_resources
 import pytest
 
+from numpy.testing import assert_almost_equal
+
 import nengo
 import nengo.simulator
 from nengo.builder import Model
@@ -285,3 +287,16 @@ def test_invalid_run_time(Simulator):
             sim.run(0)
         sim.run(0.0006)  # Rounds up to 0.001
         assert sim.n_steps == 1
+
+
+@pytest.mark.parametrize('sample_every', (None, 0.001, 0.0005, 0.002, 0.0015))
+def test_sample_every_trange(Simulator, sample_every):
+    with nengo.Network() as model:
+        t = nengo.Node(lambda t: t)
+        p = nengo.Probe(t, sample_every=sample_every)
+
+    with Simulator(model) as sim:
+        sim.run(0.01)
+
+    assert_almost_equal(
+        sim.trange(sample_every=sample_every), np.squeeze(sim.data[p]))
