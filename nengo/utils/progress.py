@@ -237,6 +237,11 @@ class TerminalProgressBar(ProgressBar):
         return '\r' + line.format(progress_str)
 
     def _get_unknown_progress_line(self, progress):
+        """Generates a progress line with continuously moving marker.
+
+        This is to indicate processing while not knowing how far along we
+        progressed with the processing.
+        """
         duration = progress.elapsed_seconds()
         line = "[{{}}] duration: {duration}".format(
             duration=timestamp2timedelta(duration))
