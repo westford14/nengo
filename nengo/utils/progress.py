@@ -54,10 +54,9 @@ class Progress(object):
     max_steps : int
         The total number of calculation steps of the process.
     ongoing_name : str, optional
-        Short description of the task the progress is for to be used while it
-        is running.
+        Short description of the task to be used while it is running.
     finished_name : str, optional
-        Short description of the task the progress is for after it has
+        Short description of the task to be used after it has
         finished. Defaults to *ongoing_name*.
 
     Attributes
@@ -67,11 +66,9 @@ class Progress(object):
     max_steps : int, optional
         The total number of calculation steps of the process (if known).
     ongoing_name : str
-        Short description of the task the progress is for to be used while it
-        is running.
+        Short description of the task to be used while it is running.
     finished_name : str
-        Short description of the task the progress is for after it has
-        finished.
+        Short description of the task to be used after it has finished.
     start_time : float
         Time stamp of the time the process was started.
     end_time : float
@@ -513,7 +510,7 @@ class ProgressUpdater(object):
 
     def __init__(self, progress_bar):
         warnings.warn(DeprecationWarning(
-            "PorgressUpdater have been deprecated because progress bars "
+            "ProgressUpdater has been deprecated because progress bars "
             "have been switched to asynchronous updating."))
         self.progress_bar = progress_bar
 
@@ -617,7 +614,7 @@ class ProgressTracker(object):
         self.total_progress = total_progress
         self.update_interval = update_interval
         self.update_thread = threading.Thread(target=self.update_loop)
-        self.update_thread.deamon = True
+        self.update_thread.daemon = True
         self._closing = False
         self.sub_progress = None
 
