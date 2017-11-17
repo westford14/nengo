@@ -497,8 +497,9 @@ with nengo.Simulator(model):
             diff = [np.median(b) - np.median(a)
                     for a, b in zip(clean_d1, clean_d2)]
 
-            p_values = np.array([2. * stats.mannwhitneyu(a, b)[1]
-                                 for a, b in zip(clean_d1, clean_d2)])
+            p_values = np.array(
+                [2. * stats.mannwhitneyu(a, b, alternative='two-sided')[1]
+                 for a, b in zip(clean_d1, clean_d2)])
             overall_p = 1. - np.prod(1. - p_values)
             if overall_p < .05:
                 logger.info("  %s: Significant change (p <= %.3f). See plots.",
@@ -562,7 +563,8 @@ cache = nengo.cache.DecoderCache()
 
         diff = np.median(clean_d2) - np.median(clean_d1)
 
-        p_value = 2. * stats.mannwhitneyu(clean_d1, clean_d2)[1]
+        p_value = 2. * stats.mannwhitneyu(
+            clean_d1, clean_d2, alternative='two-sided')[1]
         if p_value < .05:
             logger.info("Significant change of %d seconds (p <= %.3f).",
                         diff, np.ceil(p_value * 1000.) / 1000.)

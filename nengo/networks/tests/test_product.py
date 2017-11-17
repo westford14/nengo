@@ -130,7 +130,8 @@ def test_compare_product_benchmark(analytics_data, logger):
     stats = pytest.importorskip('scipy.stats')
     data1, data2 = (d['error'] for d in analytics_data)
     improvement = np.mean(data1) - np.mean(data2)
-    p = np.ceil(1000. * 2. * stats.mannwhitneyu(data1, data2)[1]) / 1000.
+    p = np.ceil(1000. * 2. * stats.mannwhitneyu(
+        data1, data2, alternative='two-sided')[1]) / 1000.
     logger.info("Multiplication improvement by %f (%.0f%%, p < %.3f)",
                 improvement, (1. - np.mean(data2) / np.mean(data1)) * 100., p)
     assert improvement >= 0. or p >= 0.05
