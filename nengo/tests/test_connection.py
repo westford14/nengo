@@ -197,7 +197,6 @@ def test_neurons_to_node(Simulator, nl_nodirect, plt, seed):
     assert np.allclose(sim.data[a_spikes], sim.data[out_p])
 
 
-@pytest.mark.filterwarnings('ignore:overflow encountered in exp')
 def test_neurons_to_neurons(Simulator, nl_nodirect, plt, seed):
     N1, N2 = 30, 50
 
@@ -417,7 +416,6 @@ def test_dimensionality_errors(nl_nodirect, seed, rng):
             nengo.Connection(e2[0], e2, transform=[[1, 2]])
 
 
-@pytest.mark.filterwarnings('ignore:overflow encountered in exp')
 def test_slicing(Simulator, nl, plt, seed):
     N = 300
 
@@ -516,7 +514,6 @@ def test_neuron_slicing(Simulator, plt, seed, rng):
     assert np.allclose(y[-10:], sim.data[bp][-10:], atol=3.0, rtol=0.0)
 
 
-@pytest.mark.filterwarnings('ignore:overflow encountered in exp')
 def test_shortfilter(Simulator, nl):
     # Testing the case where the connection filter is < dt
     m = nengo.Network()
