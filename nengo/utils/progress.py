@@ -614,6 +614,18 @@ class UpdateEveryT(ProgressUpdater):
 
 
 class ProgressTracker(object):
+    """Tracks the progress of some process with a progress bar.
+
+    Parameters
+    ----------
+    progress_bar : :class:`ProgressBar` or bool or None
+        The progress bar to display the progress (or True to use the default
+        progress bar, False/None to disable progress bar).
+    total_progress : int
+        Maximum number of steps of the process.
+    update_interval : float, optional
+        Time to wait (in seconds) between updates to progress bar display.
+    """
     def __init__(self, progress_bar, total_progress, update_interval=0.1):
         self.progress_bar = to_progressbar(progress_bar)
         self.total_progress = total_progress
@@ -624,6 +636,18 @@ class ProgressTracker(object):
         self.sub_progress = None
 
     def next_subtask(self, max_steps=None, ongoing_name='', finished_name=None):
+        """Begin tracking progress of a new subtask.
+        
+        Parameters
+        ----------
+        max_steps : int, optional
+            The total number of calculation steps of the process.
+        ongoing_name : str, optional
+            Short description of the task to be used while it is running.
+        finished_name : str, optional
+            Short description of the task to be used after it has
+            finished. Defaults to *ongoing_name*.
+        """
         if self.sub_progress is not None:
             self.total_progress.step()
         self.sub_progress = Progress(max_steps, ongoing_name, finished_name)
@@ -645,6 +669,8 @@ class ProgressTracker(object):
         self.progress_bar.close()
 
     def update_loop(self):
+        """Update the progress bar display (will run in a separate thread)."""
+
         while not self._closing:
             if (self.sub_progress is not None and
                     not self.sub_progress.finished):
@@ -686,11 +712,12 @@ def get_default_progressbar():
 
 
 def to_progressbar(progress_bar):
-    """Converts to a `ProgressBar` instance.
+    """Converts to a :class:`.ProgressBar` instance.
 
     Parameters
     ----------
     progress_bar : None, bool, or ProgressBar
+        Object to be converted to a :class:`.ProgressBar`.
 
     Returns
     -------
