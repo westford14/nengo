@@ -245,12 +245,13 @@ class LinearFilter(Synapse):
                 "Sum of denominator is near zero. System numerically unstable",
                 attr='den', obj=self)
 
+        den = den[1:]  # remove leading element, equal to one
         num = num[1:] if num[0] == 0 else num  # un-delay by one (faster sim)
         # num = np.trim_zeros(num)  # un-delay input
         num = np.trim_zeros(num, 'b')
         den = np.trim_zeros(den, 'b')
-        if len(den) < len(num):
-            den = np.pad(den, (0, len(num)-len(den)), 'constant')
+        if len(den) < len(num)-1:
+            den = np.pad(den, (0, len(num)-len(den)-1), 'constant')
 
         return num.astype(dtype), den.astype(dtype)
 
@@ -259,13 +260,12 @@ class LinearFilter(Synapse):
         assert shape_in == shape_out
 
         num, den = self._get_tf(dt, dtype=dtype, method=method)
-        X = np.zeros((len(den) - 1,) + shape_out, dtype=dtype)
+        X = np.zeros((len(den),) + shape_out, dtype=dtype)
         Xi = np.zeros(1, dtype=dtype)  # counter for X position
 
         if y0 is not None and len(X) > 0:
-            assert np.abs(sum(den)) > 1e-16, "System unstable"
             y0 = np.array(y0, copy=False, ndmin=1)
-            X[:] = y0[None, ...] / sum(den)
+            X[:] = y0[None, ...] / (1 + sum(den))
 
         return dict(X=X, Xi=Xi)
 
@@ -306,8 +306,8 @@ class LinearFilter(Synapse):
 
         @classmethod
         def check(cls, num, den, X, Xi):
-            return (len(num) <= len(den) and len(den) > 0 and den[0] == 1 and
-                    len(X) == len(den)-1 and len(Xi) == 1)
+            return (len(num) <= len(den)+1 and len(X) == len(den) and
+                    len(Xi) == 1)
 
     class NoX(Step):
         """Step for transfer function with no state and single numerator."""
@@ -327,13 +327,13 @@ class LinearFilter(Synapse):
         """Step function for transfer functions with one state element."""
         def __init__(self, num, den, X, Xi):
             super(LinearFilter.OneX, self).__init__(num, den, X, Xi)
-            self.a = den[1]
+            self.a = den[0]
             self.b = num[0]
 
         def __call__(self, t, signal):
-            self.X[:] *= self.a
-            self.X[:] += self.b * signal
-            return self.X[:]
+            self.X[:] *= -self.a
+            self.X[:] += signal
+            return self.b * self.X
 
         @classmethod
         def check(cls, num, den, X, Xi):
@@ -362,7 +362,7 @@ class LinearFilter(Synapse):
 
         def __call__(self, t, signal):
             xn = np.array(signal, ndmin=1)
-            for a, x in zip(self.den[1:], self.iterX()):
+            for a, x in zip(self.den, self.iterX()):
                 xn -= a*x
             y = np.array(xn)
             if len(self.num) > 0:
