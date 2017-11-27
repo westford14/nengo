@@ -268,6 +268,7 @@ def pytest_generate_tests(metafunc):
     marks = [
         getattr(pytest.mark, m.name)(*m.args, **m.kwargs)
         for m in getattr(metafunc.function, 'pytestmark', [])]
+
     def mark_nl(nl):
         if nl is Sigmoid:
             nl = pytest.param(nl, marks=[pytest.mark.filterwarnings(
