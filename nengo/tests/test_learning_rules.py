@@ -554,8 +554,8 @@ def test_custom_type(Simulator):
 
 def test_slicing(Simulator):
     with nengo.Network() as model:
-        a = nengo.Ensemble(10, 1)
-        b = nengo.Ensemble(10, 2)
+        a = nengo.Ensemble(30, 1)
+        b = nengo.Ensemble(30, 2)
         conn = nengo.Connection(
             a, b, learning_rule_type=PES(), function=lambda x: (0, 0))
         nengo.Connection(nengo.Node(1.), a)
