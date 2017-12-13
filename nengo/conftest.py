@@ -11,8 +11,7 @@ import pytest
 
 import nengo
 import nengo.utils.numpy as npext
-from nengo.neurons import (Direct, LIF, LIFRate, RectifiedLinear,
-                           IntegrateAndFire, Sigmoid)
+from nengo.neurons import Direct, LIF, LIFRate, RectifiedLinear, NIF, Sigmoid
 from nengo.rc import rc
 from nengo.utils.compat import ensure_bytes, is_string
 from nengo.utils.testing import Analytics, Logger, Plotter
@@ -32,8 +31,7 @@ class TestConfig(object):
     test_seed = 0  # changing this will change seeds for all tests
     Simulator = nengo.Simulator
     RefSimulator = nengo.Simulator
-    neuron_types = [Direct, LIF, LIFRate, RectifiedLinear, IntegrateAndFire,
-                    Sigmoid]
+    neuron_types = [Direct, LIF, LIFRate, NIF, RectifiedLinear, Sigmoid]
     compare_requested = False
 
     @classmethod
