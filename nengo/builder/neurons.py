@@ -119,7 +119,7 @@ def build_integrateandfire(model, integrateandfire, neurons):
     ----------
     model : Model
         The model to build into.
-    integrateandfire: IntegrateAndFire 
+    integrateandfire: IntegrateAndFire
         Neuron type to build.
     neuron : Neurons
         The neuron population object corresponding to the neuron type.

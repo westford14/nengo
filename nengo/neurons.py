@@ -262,7 +262,7 @@ class IntegrateAndFire(RectifiedLinear):
     probeable = ('spikes', 'voltage')
 
     def __init__(self):
-        super(RectifiedLinear, self).__init__()
+        super(IntegrateAndFire, self).__init__()
 
     def rates(self, x, gain, bias):
         """Always use RectifiedLinear to determine rates."""
