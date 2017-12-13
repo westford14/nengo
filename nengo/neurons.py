@@ -251,12 +251,12 @@ class RectifiedLinear(NeuronType):
 
 
 class IntegrateAndFire(RectifiedLinear):
-    """An integrate and fire neuron model.
+    """A rectified integrate and fire neuron model.
 
     Each neuron is modeled as a rectified line. That is, the neuron's activity
-    scales linearly with current, unless it passes below zero, at which point
-    the neural activity will stay at zero. This is a spiking version of the
-    RectifiedLinear neuron model.
+    scales linearly with current, unless the current is less than zero, at
+    which point the neural activity will stay at zero. This is a spiking
+    version of the RectifiedLinear neuron model.
     """
 
     probeable = ('spikes', 'voltage')
@@ -276,8 +276,8 @@ class IntegrateAndFire(RectifiedLinear):
     def step_math(self, dt, J, spiked, voltage):
         """Implement the integrate and fire nonlinearity."""
 
-        voltage += np.maximum(J * dt, 0)
-        n_spikes = voltage.astype(np.int32)
+        voltage += np.maximum(J, 0) * dt
+        n_spikes = np.floor(voltage)
         spiked[:] = n_spikes / dt
         voltage -= n_spikes
 
