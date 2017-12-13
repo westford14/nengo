@@ -261,17 +261,11 @@ class IntegrateAndFire(RectifiedLinear):
 
     probeable = ('spikes', 'voltage')
 
-    def __init__(self):
-        super(IntegrateAndFire, self).__init__()
-
     def rates(self, x, gain, bias):
-        """Always use RectifiedLinear to determine rates."""
-        J = self.current(x, gain, bias)
-        out = np.zeros_like(J)
-        # Use RectifiedLinear's step_math explicitly to ensure
-        # rate approximation
-        RectifiedLinear.step_math(self, dt=1., J=J, output=out)
-        return out
+        """Use RectifiedLinear to determine rates."""
+
+        return NeuronType.rates(
+            super(IntegrateAndFire, self), x, gain, bias)
 
     def step_math(self, dt, J, spiked, voltage):
         """Implement the integrate and fire nonlinearity."""
