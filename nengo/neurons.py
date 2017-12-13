@@ -250,6 +250,40 @@ class RectifiedLinear(NeuronType):
         output[...] = np.maximum(0., J)
 
 
+class IntegrateAndFire(RectifiedLinear):
+    """An integrate and fire rectified linear neuron model.
+
+    Each neuron is modeled as a rectified line. That is, the neuron's activity
+    scales linearly with current, unless it passes below zero, at which point
+    the neural activity will stay at zero. This is a spiking version of the
+    RectifiedLinear neuron model.
+    """
+
+    probeable = ('spikes', 'voltage')
+
+    def __init__(self):
+        super(RectifiedLinear, self).__init__()
+
+    def rates(self, x, gain, bias):
+        """Always use RectifiedLinear to determine rates."""
+        J = self.current(x, gain, bias)
+        out = np.zeros_like(J)
+        # Use RectifiedLinear's step_math explicitly to ensure
+        # rate approximation
+        RectifiedLinear.step_math(self, dt=1., J=J, output=out)
+        return out
+
+    def step_math(self, dt, J, spiked, voltage):
+        """Implement the rectification nonlinearity."""
+
+        voltage += J * dt
+        spiked_mask = voltage > 1
+        n_spikes = np.asarray(voltage, int)
+        spiked[:] = spiked_mask * (n_spikes / dt)
+        voltage -= n_spikes
+        voltage[voltage < 0.] = 0.
+
+
 class Sigmoid(NeuronType):
     """A neuron model whose response curve is a sigmoid.
 
