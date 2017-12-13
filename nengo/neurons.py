@@ -264,8 +264,10 @@ class IntegrateAndFire(RectifiedLinear):
     def rates(self, x, gain, bias):
         """Use RectifiedLinear to determine rates."""
 
-        return NeuronType.rates(
-            super(IntegrateAndFire, self), x, gain, bias)
+        J = self.current(x, gain, bias)
+        out = np.zeros_like(J)
+        RectifiedLinear.step_math(self, dt=1., J=J, output=out)
+        return out
 
     def step_math(self, dt, J, spiked, voltage):
         """Implement the integrate and fire nonlinearity."""
