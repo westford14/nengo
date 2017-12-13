@@ -251,7 +251,7 @@ class RectifiedLinear(NeuronType):
 
 
 class IntegrateAndFire(RectifiedLinear):
-    """An integrate and fire rectified linear neuron model.
+    """An integrate and fire neuron model.
 
     Each neuron is modeled as a rectified line. That is, the neuron's activity
     scales linearly with current, unless it passes below zero, at which point
@@ -274,14 +274,12 @@ class IntegrateAndFire(RectifiedLinear):
         return out
 
     def step_math(self, dt, J, spiked, voltage):
-        """Implement the rectification nonlinearity."""
+        """Implement the integrate and fire nonlinearity."""
 
-        voltage += J * dt
-        spiked_mask = voltage > 1
-        n_spikes = np.asarray(voltage, int)
-        spiked[:] = spiked_mask * (n_spikes / dt)
+        voltage += np.maximum(J * dt, 0)
+        n_spikes = voltage.astype(np.int32)
+        spiked[:] = n_spikes / dt
         voltage -= n_spikes
-        voltage[voltage < 0.] = 0.
 
 
 class Sigmoid(NeuronType):

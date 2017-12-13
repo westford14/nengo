@@ -109,7 +109,7 @@ def build_neurons(model, neurontype, neurons):
 
 
 @Builder.register(IntegrateAndFire)
-def build_rectifiedlinear(model, integrateandfire, neurons):
+def build_integrateandfire(model, integrateandfire, neurons):
     """Builds a `.IntegrateAndFire` object into a model.
 
     In addition to adding a `.SimNeurons` operator, this build function sets up
