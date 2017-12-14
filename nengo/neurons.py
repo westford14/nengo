@@ -109,21 +109,9 @@ class NeuronType(FrozenObject):
 
         gain = np.zeros_like(max_rates)
         bias = np.zeros_like(max_rates)
-        for i in range(intercepts.size):
-            ix = np.where(rate > max_rates[i])[0]
-            if len(ix) == 0:
-                ix = -1
-            else:
-                ix = ix[0]
-            if rate[ix] == rate[ix - 1]:
-                p = 1
-            else:
-                p = (max_rates[i] - rate[ix - 1]) / (rate[ix] - rate[ix - 1])
-            J_top = p * J[ix] + (1 - p) * J[ix - 1]
-
-            gain[i] = (J_threshold - J_top) / (intercepts[i] - 1)
-            bias[i] = J_top - gain[i]
-
+        J_tops = np.interp(max_rates, rate, J)
+        gain[:] = (J_threshold - J_tops) / (intercepts - 1)
+        bias[:] = J_tops - gain
         return gain, bias
 
     def max_rates_intercepts(self, gain, bias):
