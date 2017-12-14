@@ -75,7 +75,6 @@ class NeuronType(FrozenObject):
         max_rates = np.array(max_rates, dtype=float, copy=False, ndmin=1)
         intercepts = np.array(intercepts, dtype=float, copy=False, ndmin=1)
 
-        J_max = 0
         J_steps = 101  # Odd number so that 0 is a sample
         max_rate = max_rates.max()
 
@@ -84,12 +83,29 @@ class NeuronType(FrozenObject):
         bias = np.zeros(J_steps)
         rate = np.zeros(J_steps)
 
-        # Find range of J that will achieve max rates
-        while rate[-1] < max_rate and J_max < 100:
-            J_max += 10
-            J = np.linspace(-J_max, J_max, J_steps)
+        # Find range of J that will achieve max rates (assume monotonic)
+        J_threshold = None
+        J_max = None
+        Jr = 10
+        for _ in range(10):
+            J = np.linspace(-Jr, Jr, J_steps)
             rate = self.rates(J, gain, bias)
-        J_threshold = J[np.where(rate <= 0)[0][-1]]
+            if J_threshold is None and (rate <= 0).any():
+                J_threshold = J[np.where(rate <= 0)[0][-1]]
+            if J_max is None and (rate >= max_rate).any():
+                J_max = J[np.where(rate >= max_rate)[0][0]]
+            if J_threshold is not None and J_max is not None:
+                break
+            else:
+                Jr *= 2
+        else:
+            if J_threshold is None:
+                raise RuntimeError("Could not find firing threshold")
+            if J_max is None:
+                raise RuntimeError("Could not find max current")
+
+        J = np.linspace(J_threshold, J_max, J_steps)
+        rate = self.rates(J, gain, bias)
 
         gain = np.zeros_like(max_rates)
         bias = np.zeros_like(max_rates)
