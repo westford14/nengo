@@ -179,6 +179,8 @@ def rmse(x, y, axis=None, keepdims=False):
         If True, the reduced axes are left in the result. See `np.sum` in
         newer versions of Numpy (>= 1.7).
     """
+    if x.shape != y.shape:
+        raise TypeError("x: {x} and y: {y} have mismatched shapes".format(x=x.shape, y=y.shape))
     return rms(x - y, axis=axis, keepdims=keepdims)
 
 
