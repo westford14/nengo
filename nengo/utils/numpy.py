@@ -178,6 +178,11 @@ def rmse(x, y, axis=None, keepdims=False):
     keepdims : bool, optional
         If True, the reduced axes are left in the result. See `np.sum` in
         newer versions of Numpy (>= 1.7).
+
+    Raises
+    ------
+    TypeError:
+        If the two arrays passed to rmse() are not of the same shape, error is raised
     """
     if x.shape != y.shape:
         raise TypeError("x: {x} and y: {y} have mismatched shapes".format(x=x.shape, y=y.shape))
